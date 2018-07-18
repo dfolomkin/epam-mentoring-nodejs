@@ -1,0 +1,11 @@
+.class3 {
+  display: inline-block;
+  margin: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16em;
+  color: #996633;
+}
+
+.class4 {
+  cursor: pointer;
+}
