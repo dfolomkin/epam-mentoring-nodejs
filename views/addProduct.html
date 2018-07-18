@@ -1,0 +1,40 @@
+<html>
+
+<head></head>
+
+<body>
+  <form method="post" action="/api/products">
+    <div>
+      <label for="prodId">Product ID</label>
+      <input id="prodId" name="id" type="text">
+    </div>
+    <div>
+      <label for="prodName">Product Name</label>
+      <input id="prodName" name="name" type="text">
+    </div>
+    <button id="postProdButton">Add Product</button>
+  </form>
+
+  <script>
+    var splittedCookie = document.cookie.split('; ');
+    var tokenPair = splittedCookie.find(function (item) { return item.indexOf('token') !== -1 }) || '';
+    var token = tokenPair.split('=')[1];
+    document.getElementById('postProdButton').addEventListener('click', function (e) {
+      var body = JSON.stringify({
+        id: document.getElementById('prodId').value,
+        name: document.getElementById('prodName').value,
+      });
+      e.preventDefault();
+      fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-access-token': token
+        },
+        body: body
+      });
+    });
+  </script>
+</body>
+
+</html>
