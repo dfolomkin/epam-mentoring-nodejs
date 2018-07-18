@@ -2,27 +2,31 @@
   "name": "epm-nodejs",
   "version": "1.0.0",
   "description": "this repo is for nodejs training",
-  "main": "./dist/app.js",
+  "main": "./index.js",
   "scripts": {
-    "babel": "babel src --out-dir dist --presets=env --watch",
-    "prestart": "babel src --out-dir dist --presets=env",
-    "start": "nodemon ./dist/app.js",
+    "start": "nodemon ./index.js",
     "test": ""
   },
   "repository": {
     "type": "git",
     "url": "https://Dmitry_Folomkin@git.epam.com/Dmitry_Folomkin/epm-nodejs.git"
   },
-  "keywords": ["epam", "training", "mentoring", "nodejs"],
+  "keywords": [
+    "epam",
+    "training",
+    "nodejs"
+  ],
   "author": "Dmitry Folomkin",
   "email": "dmitry_folomkin@epam.com",
   "license": "ISC",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "through2": "^2.0.3"
   }
 }
