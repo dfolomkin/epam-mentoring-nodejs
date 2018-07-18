@@ -4,9 +4,7 @@
   "description": "this repo is for nodejs training",
   "main": "./dist/app.js",
   "scripts": {
-    "babel": "babel src --out-dir dist --presets=env --watch",
-    "prestart": "babel src --out-dir dist --presets=env",
-    "start": "nodemon ./dist/app.js",
+    "start": "nodemon --exec babel-node ./app.js",
     "test": ""
   },
   "repository": {
