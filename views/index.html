@@ -1,0 +1,72 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+  <a href="/authJwt">jwt auth</a>
+  <br />
+  <a href="" id="getProdsLink">get products</a>
+  <br />
+  <a href="" id="getProdLink">get product 102</a>
+  <br />
+  <a href="" id="getReviewsLink">get reviews of product 102</a>
+  <br />
+  <a href="" id="getUsersLink">get users</a>
+  <br />
+  <a href="/addProduct">add product</a>
+  <br/>
+  <br />
+  <a href="/authPassport">login w/ local</a>
+  <br />
+  <a href="/api/login/facebook">login w/ facebook</a>
+  <br />
+  <a href="/api/login/twitter">login w/ twitter</a>
+  <br />
+  <a href="/api/login/google">login w/ google</a>
+
+  <script>
+    var splittedCookie = document.cookie.split('; ');
+    var tokenPair = splittedCookie.find(function (item) { return item.indexOf('token') !== -1 }) || '';
+    var token = tokenPair.split('=')[1];
+    document.getElementById('getProdsLink').addEventListener('click', function (e) {
+      e.preventDefault();
+      fetch('/api/products', {
+        method: 'GET',
+        headers: {
+          'x-access-token': token
+        }
+      }).then(res => res.json()).then(data => console.log(data));
+    });
+    document.getElementById('getProdLink').addEventListener('click', function (e) {
+      e.preventDefault();
+      fetch('/api/products/102', {
+        method: 'GET',
+        headers: {
+          'x-access-token': token
+        }
+      }).then(res => res.json()).then(data => console.log(data));
+    });
+    document.getElementById('getReviewsLink').addEventListener('click', function (e) {
+      e.preventDefault();
+      fetch('/api/products/102/reviews', {
+        method: 'GET',
+        headers: {
+          'x-access-token': token
+        }
+      }).then(res => res.json()).then(data => console.log(data));
+    });
+    document.getElementById('getUsersLink').addEventListener('click', function (e) {
+      e.preventDefault();
+      fetch('/api/users', {
+        method: 'GET',
+        headers: {
+          'x-access-token': token
+        }
+      }).then(res => res.json()).then(data => console.log(data));
+    });
+  </script>
+</body>
+
+</html>
