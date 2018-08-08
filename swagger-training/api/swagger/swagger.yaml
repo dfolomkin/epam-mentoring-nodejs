@@ -1,0 +1,449 @@
+swagger: "2.0"
+info:
+  description: This is a API for nodejs-training project
+  version: 1.0.0
+  title: Node.js Training API
+  contact:
+    email: dmitry_folomkin@epam.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: localhost:9000
+basePath: /api
+consumes:
+  - application/json
+produces:
+  - application/json
+tags:
+- name: cities
+  description: cities
+- name: users
+  description: product consumers
+- name: products
+  description: products
+- name: meta
+  description: some extra information
+- name: auth
+  description: jwt auth
+- name: login
+  description: passport auth
+schemes:
+- http
+paths:
+  /randomcity:
+    get:
+      tags:
+      - cities
+      summary: get one random city
+      description: get one random city
+      operationId: getRandomCity
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: random item returned
+          schema:
+            $ref: '#/definitions/City'
+  /cities:
+    get:
+      tags:
+      - cities
+      summary: get all cities
+      description: get all cities
+      operationId: getAllCities
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: array of items returned
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/City'
+    post:
+      tags:
+      - cities
+      summary: add one new city
+      description: add one new city
+      operationId: postNewCity
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: city
+        description: city item to add
+        required: false
+        schema:
+          $ref: '#/definitions/City'
+      responses:
+        200:
+          description: item added
+        500:
+          description: error appeared
+  /cities/{id}:
+    put:
+      tags:
+      - cities
+      summary: edit existing city or add new one
+      description: edit existing city or add new one
+      operationId: putCity
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of city to be edited
+        required: true
+        type: string
+        minimum: 0
+        format: int32
+      - in: body
+        name: city
+        description: city item with changed fields
+        required: false
+        schema:
+          $ref: '#/definitions/City'
+      responses:
+        200:
+          description: existing item changed
+          schema:
+            $ref: '#/definitions/City'
+        201:
+          description: new item added
+        500:
+          description: error appeared
+    delete:
+      tags:
+      - cities
+      summary: delete one city
+      description: delete one city
+      operationId: deleteCity
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of city to be deleted
+        required: true
+        type: string
+        minimum: 0
+        format: int32
+      responses:
+        200:
+          description: item deleted
+          schema:
+            $ref: '#/definitions/City'
+  /products:
+    get:
+      tags:
+      - products
+      summary: get all products
+      description: get all products
+      operationId: getAllProducts
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: array of items returned
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+    post:
+      tags:
+      - products
+      summary: add one new product
+      description: add one new product
+      operationId: postNewProduct
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: product
+        description: product item to add
+        required: false
+        schema:
+          $ref: '#/definitions/Product'
+      responses:
+        200:
+          description: item added
+        500:
+          description: error appeared
+  /products/{id}:
+    get:
+      tags:
+      - products
+      summary: get one product
+      description: get one product
+      operationId: getProduct
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of product to be returned
+        required: true
+        type: string
+        minimum: 0
+        format: int32
+      responses:
+        200:
+          description: item returned
+          schema:
+            $ref: '#/definitions/Product'
+    delete:
+      tags:
+      - products
+      summary: delete one product
+      description: delete one product
+      operationId: deleteProduct
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of product to be deleted
+        required: true
+        type: string
+        minimum: 0
+        format: int32
+      responses:
+        200:
+          description: item deleted
+          schema:
+            $ref: '#/definitions/Product'
+  /products/{id}/reviews:
+    get:
+      tags:
+      - products
+      summary: get all reviews of one product
+      description: get all reviews of one product
+      operationId: getAllReviews
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of product, that reviews should be returned
+        required: true
+        type: string
+        minimum: 0
+        format: int32
+      responses:
+        200:
+          description: array of items returned
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Review'
+  /users:
+    get:
+      tags:
+      - users
+      summary: get all users
+      description: get all users
+      operationId: getAllUsers
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: array of items returned
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+  /users/{id}:
+    delete:
+      tags:
+      - users
+      summary: delete one user
+      description: delete one user
+      operationId: deleteUser
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of user to be deleted
+        required: true
+        type: string
+        minimum: 0
+        format: int32
+      responses:
+        200:
+          description: item deleted
+          schema:
+            $ref: '#/definitions/User'
+  /auth:
+    post:
+      tags:
+      - auth
+      summary: post auth pair
+      description: post username and password
+      operationId: postAuthPair
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: authPair
+        description: username and password
+        required: false
+        schema:
+          $ref: '#/definitions/AuthPair'
+      responses:
+        200:
+          description: token returned
+        403:
+          description: Bad username/password
+  /login/local:
+    post:
+      tags:
+      - login
+      summary: post auth pair to login with local strategy
+      description: post username and password to login with local strategy
+      operationId: loginWithLocal
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: authPair
+        description: username and password
+        required: false
+        schema:
+          $ref: '#/definitions/AuthPair'
+      responses:
+        200:
+          description: token returned
+definitions:
+  City:
+    type: object
+    required:
+    - capital
+    - country
+    - id
+    - lat
+    - long
+    - name
+    properties:
+      id:
+        type: string
+        format: int32
+        example: "1"
+      name:
+        type: string
+        example: Ryazan
+      country:
+        type: string
+        example: Russia
+      capital:
+        type: string
+        example: Moscow
+      lat:
+        type: string
+        format: float
+        example: "70.5"
+      long:
+        type: string
+        format: float
+        example: "100.5"
+    example:
+      country: Russia
+      capital: Moscow
+      name: Ryazan
+      id: "1"
+      lat: "70.5"
+      long: "100.5"
+  Product:
+    type: object
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: string
+        format: int32
+        example: "1"
+      name:
+        type: string
+        example: Cola
+      reviews:
+        type: array
+        items:
+          $ref: '#/definitions/Review'
+    example:
+      reviews:
+      - date: 24.07.18
+        id: "1"
+      - date: 24.07.18
+        id: "1"
+      name: Cola
+      id: "1"
+  Review:
+    type: object
+    properties:
+      id:
+        type: string
+        format: int32
+        example: "1"
+      date:
+        type: string
+        format: date-time
+        example: 24.07.18
+    example:
+      date: 24.07.18
+      id: "1"
+  User:
+    type: object
+    required:
+    - email
+    - firstName
+    - id
+    - lastName
+    properties:
+      id:
+        type: string
+        format: int32
+        example: "1"
+      firstName:
+        type: string
+        example: John
+      lastName:
+        type: string
+        example: Doe
+      email:
+        type: string
+        example: john_doe@gmail.com
+    example:
+      firstName: John
+      lastName: Doe
+      id: "1"
+      email: john_doe@gmail.com
+  AuthPair:
+    type: object
+    required:
+    - password
+    - username
+    properties:
+      username:
+        type: string
+        example: j.doe
+      password:
+        type: string
+        example: jd123456
+    example:
+      password: jd123456
+      username: j.doe
